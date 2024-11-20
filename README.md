@@ -22,3 +22,10 @@ EcoPulse is a mobile application that allows users to track their carbon footpri
 ## Who we are
 
 - [@MasonD-007](https://github.com/MasonD-007)
+
+## Helpful Links
+
+- [Flutter Documentation](https://docs.flutter.dev)
+- [Dart Documentation](https://dart.dev/guides)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [How to do pull requests](https://graphite.dev/guides/create-pr-from-gh-command-line)
