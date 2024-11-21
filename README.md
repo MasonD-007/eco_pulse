@@ -22,6 +22,7 @@ EcoPulse is a mobile application that allows users to track their carbon footpri
 ## Who we are
 
 - [@MasonD-007](https://github.com/MasonD-007)
+- [@harrywhalen](https://github.com/harrywhalen)
 
 ## Helpful Links
 
