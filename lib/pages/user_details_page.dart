@@ -25,6 +25,7 @@ class UserDetailsPage extends StatelessWidget {
             Text('Email: $email'),
             const SizedBox(height: 8),
             Text('Password: $password'),
+            // Text('YOU SMELLLLLL')
           ],
         ),
       ),
