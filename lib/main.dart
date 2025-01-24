@@ -34,9 +34,9 @@ class MyApp extends StatelessWidget {
       ),
       home: const HomePage(title: 'EcoPulse'),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: "/home",
       routes: {
-        '/': (context) => const HomePage(title: 'EcoPulse'),
+        '/home': (context) => const HomePage(title: 'EcoPulse'),
       },
     );
   }
