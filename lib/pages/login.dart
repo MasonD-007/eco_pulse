@@ -10,11 +10,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -27,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(
           builder: (context) => UserDetailsPage(
+            name: _nameController.text,
             email: _emailController.text,
             password: _passwordController.text,
           ),
@@ -49,6 +52,19 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -80,6 +96,10 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: _handleLogin,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white
+                ),
                 child: const Text('Submit'),
               ),
             ],
