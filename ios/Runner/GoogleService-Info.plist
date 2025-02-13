@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>676792714579-d75j0efq8uer9slrev7mfqm19r4c01nd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.676792714579-d75j0efq8uer9slrev7mfqm19r4c01nd</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC-IevTDgGxDNec6JOGtKJG0KXRqOSthJI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>676792714579</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.ecoPulse</string>
+	<key>PROJECT_ID</key>
+	<string>ecopulse-f32ce</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ecopulse-f32ce.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:676792714579:ios:a29b02c8be9a095ae6cda6</string>
+</dict>
+</plist>
