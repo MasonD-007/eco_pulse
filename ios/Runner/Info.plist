@@ -45,5 +45,17 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- TODO: Replace this value with your Google OAuth Client ID -->
+				<string>676792714579-d75j0efq8uer9slrev7mfqm19r4c01nd.apps.googleusercontent.com</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
