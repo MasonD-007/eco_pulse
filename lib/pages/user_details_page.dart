@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class UserDetailsPage extends StatelessWidget {
+  final String name;
   final String email;
   final String password;
 
   const UserDetailsPage({
     super.key,
+    required this.name,
     required this.email,
     required this.password,
   });
@@ -22,6 +24,7 @@ class UserDetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text('Name: $name'),
             Text('Email: $email'),
             const SizedBox(height: 8),
             Text('Password: $password'),
