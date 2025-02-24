@@ -5,6 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'pages/onboarding.dart';
 import 'services/theme_service.dart';
+import 'services/auth_service.dart';
+import 'pages/splash_screen.dart';
+import 'widgets/auth_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,8 +18,11 @@ void main() async {
   final themeService = ThemeService(prefs);
   
   runApp(
-    ChangeNotifierProvider.value(
-      value: themeService,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider.value(value: themeService),
+      ],
       child: const MyApp(),
     ),
   );
@@ -34,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeService.getLightTheme(),
       darkTheme: ThemeService.getDarkTheme(),
       themeMode: themeService.themeMode,
-      home: const OnboardingScreen(),
+      home: const AuthWrapper(),
       debugShowCheckedModeBanner: false,
     );
   }

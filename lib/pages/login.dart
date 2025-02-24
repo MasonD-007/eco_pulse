@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/auth_service.dart';
-import 'signup.dart';
 import 'home.dart';
+import 'forgot_password.dart';
+import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,13 +37,13 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _isLoading = true);
 
     try {
-      await _authService.signIn(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
+      await _authService.signInWithEmailAndPassword(
+        _emailController.text.trim(),
+        _passwordController.text,
       );
 
       if (!mounted) return;
-
+      
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage(title: 'EcoPulse')),
@@ -51,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       String message;
       switch (e.code) {
         case 'user-not-found':
-          message = 'No user found with this email.';
+          message = 'No user found for that email.';
           break;
         case 'wrong-password':
           message = 'Wrong password provided.';
@@ -60,48 +61,31 @@ class _LoginPageState extends State<LoginPage> {
           message = 'The email address is invalid.';
           break;
         case 'user-disabled':
-          message = 'This user account has been disabled.';
+          message = 'This account has been disabled.';
           break;
         default:
           message = 'An error occurred. Please try again.';
       }
       
       if (!mounted) return;
+      setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(message)),
       );
     } catch (e) {
       if (!mounted) return;
+      setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error occurred. Please try again.')),
+        SnackBar(content: Text('An error occurred: $e')),
       );
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
     }
   }
 
-  Future<void> _handleForgotPassword() async {
-    if (_emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your email address')),
-      );
-      return;
-    }
-
-    try {
-      await _authService.resetPassword(_emailController.text.trim());
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password reset email sent')),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to send reset email')),
-      );
-    }
+  void _handleForgotPassword() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
+    );
   }
 
   @override
@@ -109,25 +93,35 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Welcome!',
+                'Welcome back',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
+              const SizedBox(height: 8),
+              Text(
+                'Sign in to continue',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+              ),
               const SizedBox(height: 32),
               TextField(
                 controller: _emailController,
+                style: const TextStyle(color: Colors.black),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: 'Email Address',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
@@ -140,9 +134,11 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
+                style: const TextStyle(color: Colors.black),
                 obscureText: _obscurePassword,
                 decoration: InputDecoration(
                   hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
@@ -163,17 +159,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: _handleForgotPassword,
-                  child: Text(
-                    'Forgot password?',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
+                  child: const Text('Forgot Password?'),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -196,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         )
                       : const Text(
-                          'Login',
+                          'Sign In',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -204,65 +198,15 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                 ),
               ),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      'OR',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey[300],
-                      thickness: 1,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: OutlinedButton.icon(
-                  onPressed: _isLoading ? null : _handleGoogleSignIn,
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    side: const BorderSide(color: Colors.blue),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  icon: Image.network(
-                    'https://www.google.com/favicon.ico',
-                    height: 24,
-                  ),
-                  label: const Text(
-                    'Continue with Google',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Not a member? ',
-                    style: TextStyle(color: Colors.grey[600]),
+                    'Don\'t have an account?',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
                   ),
                   TextButton(
                     onPressed: () {
@@ -271,13 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                         MaterialPageRoute(builder: (context) => const SignupPage()),
                       );
                     },
-                    child: const Text(
-                      'Register now',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    child: const Text('Sign Up'),
                   ),
                 ],
               ),
@@ -286,37 +224,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _handleGoogleSignIn() async {
-    setState(() => _isLoading = true);
-
-    try {
-      final userCredential = await _authService.signInWithGoogle();
-      
-      if (!mounted) return;
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(title: 'EcoPulse'),
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.toString().contains('ERROR_ABORTED_BY_USER')
-                ? 'Sign in cancelled'
-                : 'Failed to sign in with Google',
-          ),
-        ),
-      );
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
   }
 }

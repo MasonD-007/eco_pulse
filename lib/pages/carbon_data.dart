@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'home.dart';
+import 'carbon_input_pages/transportation_input_page.dart';
+import 'carbon_input_pages/energy_consumption_input_page.dart';
+import 'carbon_input_pages/diet_input_page.dart';
+import 'carbon_input_pages/shopping_input_page.dart';
+import 'carbon_input_pages/waste_input_page.dart';
+import 'carbon_input_pages/water_input_page.dart';
+import 'carbon_input_pages/travel_input_page.dart';
+import 'carbon_input_pages/offset_input_page.dart';
 
 class CarbonDataPage extends StatefulWidget {
   const CarbonDataPage({super.key});
@@ -97,6 +105,48 @@ class _CarbonDataPageState extends State<CarbonDataPage> {
     }
   }
 
+  void _navigateToInputPage(String category) {
+    Widget page;
+    switch (category) {
+      case 'Transportation':
+        page = const TransportationInputPage();
+        break;
+      case 'Energy Consumption':
+        page = const EnergyConsumptionInputPage();
+        break;
+      case 'Diet and Food Consumption':
+        page = const DietInputPage();
+        break;
+      case 'Shopping and Goods':
+        page = const ShoppingInputPage();
+        break;
+      case 'Waste and Recycling':
+        page = const WasteInputPage();
+        break;
+      case 'Water Usage':
+        page = const WaterInputPage();
+        break;
+      case 'Travel and Holidays':
+        page = const TravelInputPage();
+        break;
+      case 'Offset Efforts':
+        page = const OffsetInputPage();
+        break;
+      default:
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('$category input page coming soon!'),
+          ),
+        );
+        return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,6 +188,9 @@ class _CarbonDataPageState extends State<CarbonDataPage> {
                             setState(() {
                               item.isSelected = !item.isSelected;
                             });
+                            if (item.isSelected) {
+                              _navigateToInputPage(item.title);
+                            }
                           },
                           child: Container(
                             padding: const EdgeInsets.all(16),

@@ -150,8 +150,10 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 32),
               TextField(
                 controller: _nameController,
+                style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   hintText: 'Name',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
@@ -164,9 +166,11 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 16),
               TextField(
                 controller: _emailController,
+                style: const TextStyle(color: Colors.black),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: 'Email Address',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
@@ -179,9 +183,11 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
+                style: const TextStyle(color: Colors.black),
                 obscureText: _obscurePassword,
                 decoration: InputDecoration(
                   hintText: 'Password',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
@@ -205,9 +211,11 @@ class _SignupPageState extends State<SignupPage> {
               const SizedBox(height: 16),
               TextField(
                 controller: _confirmPasswordController,
+                style: const TextStyle(color: Colors.black),
                 obscureText: _obscureConfirmPassword,
                 decoration: InputDecoration(
                   hintText: 'Confirm Password',
+                  hintStyle: TextStyle(color: Colors.grey[600]),
                   filled: true,
                   fillColor: Colors.grey[100],
                   border: OutlineInputBorder(
