@@ -22,11 +22,11 @@ export default function CarbonInputPage() {
       console.log("Saving data...");
       console.log("name: " + name.trim());
       console.log("footprint: " + footprint);
-        await addDoc(collection(db, "users"), {
-          name: name.trim(),
-          footprint: parseFloat(footprint),
-          createdAt: new Date(),
-        });
+      await addDoc(collection(db, "users"), {
+        name: name.trim(),
+        footprint: parseFloat(footprint),
+        createdAt: new Date(),
+      });
       setStatus(`Successfully saved your carbon footprint!`);
       // Clear the form after successful submission
       setName("");
@@ -44,7 +44,7 @@ export default function CarbonInputPage() {
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Carbon Footprint Tracker</h1>
           <p className="text-gray-600">Record and monitor your carbon impact</p>
         </div>
-        
+
         <div className="bg-white shadow rounded-lg p-6 space-y-6">
           <div className="space-y-2">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -78,17 +78,17 @@ export default function CarbonInputPage() {
 
           <button
             onClick={handleSave}
-            className="w-full bg-blue-600 text-white px-4 py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            className="w-full bg-green-600 text-white px-4 py-3 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+
           >
             Save Carbon Footprint
           </button>
-          
+
           {status && (
-            <div className={`mt-4 p-3 rounded-md ${
-              status.includes("Error") 
-                ? "bg-red-50 text-red-700" 
+            <div className={`mt-4 p-3 rounded-md ${status.includes("Error")
+                ? "bg-red-50 text-red-700"
                 : "bg-green-50 text-green-700"
-            }`}>
+              }`}>
               {status}
             </div>
           )}
