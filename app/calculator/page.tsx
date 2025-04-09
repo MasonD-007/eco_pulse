@@ -4,9 +4,11 @@ import React from 'react';
 import Head from 'next/head';
 import { Button } from '@/components/ui/button'; // Assuming you're using the Button component from your library
 
+import { useRouter } from 'next/navigation'; // Importing useRouter from next/navigation
 const Calculator: React.FC = () => {
+  const router = useRouter();
   const handleSubmit = () => {
-    alert('Data Submitted!');
+    router.push('/output');
   };
 
   return (
@@ -19,7 +21,7 @@ const Calculator: React.FC = () => {
 
       {/* Action Button */}
       <div style={{ position: 'absolute', top: '20px', right: '20px' }}>
-        <Button 
+        <Button
           onClick={handleSubmit}
           className="bg-green-600 hover:bg-green-700 text-white"
         >

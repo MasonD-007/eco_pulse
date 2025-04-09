@@ -1,6 +1,8 @@
 {
-  "/favicon.ico/route": "/favicon.ico",
   "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
   "/calculator/page": "/calculator",
-  "/page": "/"
+  "/name/page": "/name",
+  "/page": "/",
+  "/output/page": "/output"
 }
