@@ -80,7 +80,7 @@ export default function LandingPage() {
                   impact.
                 </p>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Link href="/name" passHref>
+                  <Link href="/calculator" passHref>
                     <Button className="bg-green-600 hover:bg-green-700">Calculate Your Footprint</Button>
                   </Link>
                   <Button variant="outline">Learn More</Button>
