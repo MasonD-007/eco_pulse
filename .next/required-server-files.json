@@ -96,7 +96,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/Users/harry/google_project/eco_pulse",
+    "outputFileTracingRoot": "/Users/masondrake/gitwork/eco_pulse",
     "experimental": {
       "allowedDevOrigins": [],
       "nodeMiddleware": false,
@@ -154,7 +154,7 @@
       "middlewarePrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 10,
+      "cpus": 9,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptTimeoutInSeconds": 7,
@@ -175,7 +175,7 @@
       "forceSwcTransforms": false,
       "largePageDataBytes": 128000,
       "turbo": {
-        "root": "/Users/harry/google_project/eco_pulse"
+        "root": "/Users/masondrake/gitwork/eco_pulse"
       },
       "typedRoutes": false,
       "typedEnv": false,
@@ -281,7 +281,7 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts"
   },
-  "appDir": "/Users/harry/google_project/eco_pulse",
+  "appDir": "/Users/masondrake/gitwork/eco_pulse",
   "relativeAppDir": "",
   "files": [
     ".next/routes-manifest.json",

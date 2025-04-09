@@ -1,4 +1,4 @@
-// File: /Users/harry/google_project/eco_pulse/app/calculator/page.tsx
+// File: /Users/masondrake/gitwork/eco_pulse/app/calculator/page.tsx
 import * as entry from '../../../../app/calculator/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
