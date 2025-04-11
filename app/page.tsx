@@ -10,7 +10,6 @@ import Link from "next/link"
 interface Footprint {
   id: number;
   name: string;
-  location: string;
   footprint: number;
   color: string;
 }
@@ -23,13 +22,11 @@ export default function LandingPage() {
     const generateFootprints = () => {
       const newFootprints = []
       const names = ["Alex", "Jamie", "Taylor", "Jordan", "Casey", "Morgan", "Riley", "Quinn", "Sam", "Avery"]
-      const locations = ["New York", "London", "Tokyo", "Paris", "Sydney", "Berlin", "Toronto", "Singapore"]
 
       for (let i = 0; i < 20; i++) {
         newFootprints.push({
           id: i,
           name: names[Math.floor(Math.random() * names.length)],
-          location: locations[Math.floor(Math.random() * locations.length)],
           footprint: Math.floor(Math.random() * 15) + 2, // Carbon footprint in tons (2-16)
           color: `hsl(${Math.floor(Math.random() * 60) + 100}, ${Math.floor(Math.random() * 30) + 60}%, ${Math.floor(Math.random() * 20) + 40}%)`,
         })
