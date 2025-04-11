@@ -60,14 +60,6 @@ export default function LandingPage() {
               Contact
             </Link>
           </nav>
-          <div className="flex gap-4">
-            <Button variant="outline" size="sm" className="hidden md:flex">
-              Log In
-            </Button>
-            <Button size="sm" className="bg-green-600 hover:bg-green-700">
-              Sign Up
-            </Button>
-          </div>
         </div>
       </header>
 

@@ -1,34 +1,38 @@
 {
   "pages": {
-    "/_not-found/page": [
-      "static/chunks/webpack-db3214c5c58110e1.js",
-      "static/chunks/4bd1b696-16d61eec428fe094.js",
-      "static/chunks/684-c0b26dbc85cf007a.js",
-      "static/chunks/main-app-300f5d1c3794206e.js",
-      "static/chunks/app/_not-found/page-edef0fcd75f21114.js"
-    ],
-    "/layout": [
-      "static/chunks/webpack-db3214c5c58110e1.js",
-      "static/chunks/4bd1b696-16d61eec428fe094.js",
-      "static/chunks/684-c0b26dbc85cf007a.js",
-      "static/chunks/main-app-300f5d1c3794206e.js",
-      "static/css/06eaf9cae646f883.css",
-      "static/chunks/app/layout-9fafdfc1f7ec3023.js"
-    ],
     "/calculator/page": [
-      "static/chunks/webpack-db3214c5c58110e1.js",
-      "static/chunks/4bd1b696-16d61eec428fe094.js",
-      "static/chunks/684-c0b26dbc85cf007a.js",
-      "static/chunks/main-app-300f5d1c3794206e.js",
-      "static/chunks/app/calculator/page-a73f0c401389f398.js"
+      "static/chunks/node_modules_next_dist_1a6ee436._.js",
+      "static/chunks/app_favicon_ico_mjs_1579f9cb._.js",
+      "static/chunks/[root of the server]__98144f0b._.css",
+      "static/chunks/app_layout_tsx_f0e4c1a2._.js",
+      "static/chunks/node_modules_d1513131._.js",
+      "static/chunks/_fdb83dd7._.js",
+      "static/chunks/app_calculator_page_tsx_b741fd61._.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_49a6ea35._.js",
+      "static/chunks/node_modules_next_dist_compiled_2ce9398a._.js",
+      "static/chunks/node_modules_next_dist_client_43e3ffb8._.js",
+      "static/chunks/node_modules_next_dist_3bfaed20._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636ac3._.js",
+      "static/chunks/_e69f0d32._.js",
+      "static/chunks/_be317ff2._.js"
     ],
-    "/page": [
-      "static/chunks/webpack-db3214c5c58110e1.js",
-      "static/chunks/4bd1b696-16d61eec428fe094.js",
-      "static/chunks/684-c0b26dbc85cf007a.js",
-      "static/chunks/main-app-300f5d1c3794206e.js",
-      "static/chunks/556-f9d802319a9c4c2c.js",
-      "static/chunks/app/page-1fca16726536672b.js"
+    "/output/page": [
+      "static/chunks/node_modules_next_dist_1a6ee436._.js",
+      "static/chunks/app_favicon_ico_mjs_1579f9cb._.js",
+      "static/chunks/[root of the server]__98144f0b._.css",
+      "static/chunks/app_layout_tsx_f0e4c1a2._.js",
+      "static/chunks/node_modules_@firebase_auth_dist_esm2017_e4c8860e._.js",
+      "static/chunks/node_modules_@firebase_firestore_dist_index_esm2017_c2fcaa2e.js",
+      "static/chunks/node_modules_ebd90ed9._.js",
+      "static/chunks/_8fb26ed5._.js",
+      "static/chunks/app_output_page_tsx_b741fd61._.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_49a6ea35._.js",
+      "static/chunks/node_modules_next_dist_compiled_2ce9398a._.js",
+      "static/chunks/node_modules_next_dist_client_43e3ffb8._.js",
+      "static/chunks/node_modules_next_dist_3bfaed20._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636ac3._.js",
+      "static/chunks/_e69f0d32._.js",
+      "static/chunks/_be317ff2._.js"
     ]
   }
 }
