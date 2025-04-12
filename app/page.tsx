@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, Suspense } from "react"
 import { motion } from "framer-motion"
 import { Leaf, BarChart, Globe, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -16,23 +16,39 @@ interface Footprint {
   color: string;
 }
 
-export default function LandingPage() {
-  const [footprints, setFootprints] = useState<Footprint[]>([])
-  const [loading, setLoading] = useState(true)
-  const [showNotification, setShowNotification] = useState(false)
+function SearchParamsWrapper() {
   const searchParams = useSearchParams()
+  const [showNotification, setShowNotification] = useState(false)
 
-  // Check for footprintAdded parameter
   useEffect(() => {
     if (searchParams.get('footprintAdded') === 'true') {
       setShowNotification(true)
-      // Auto-hide notification after 5 seconds
       const timer = setTimeout(() => {
         setShowNotification(false)
       }, 5000)
       return () => clearTimeout(timer)
     }
   }, [searchParams])
+
+  return showNotification ? (
+    <div className="fixed top-4 inset-x-0 mx-auto w-fit z-50">
+      <div className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center">
+        <Leaf className="mr-2 h-5 w-5" />
+        <p>Your footprint was added! Watch the animation to see your carbon footprint.</p>
+        <button 
+          onClick={() => setShowNotification(false)}
+          className="ml-4 p-1 hover:bg-green-700 rounded-full"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  ) : null
+}
+
+export default function LandingPage() {
+  const [footprints, setFootprints] = useState<Footprint[]>([])
+  const [loading, setLoading] = useState(true)
 
   // Fetch footprint data from Firebase
   useEffect(() => {
@@ -55,7 +71,6 @@ export default function LandingPage() {
         setFootprints(fetchedFootprints)
       } catch (error) {
         console.error("Error fetching footprints:", error)
-        // Fallback to random data if fetch fails
         generateRandomFootprints()
       } finally {
         setLoading(false)
@@ -70,7 +85,7 @@ export default function LandingPage() {
         newFootprints.push({
           id: i.toString(),
           name: names[Math.floor(Math.random() * names.length)],
-          footprint: Math.floor(Math.random() * 15) + 2, // Carbon footprint in tons (2-16)
+          footprint: Math.floor(Math.random() * 15) + 2,
           color: `hsl(${Math.floor(Math.random() * 60) + 100}, ${Math.floor(Math.random() * 30) + 60}%, ${Math.floor(Math.random() * 20) + 40}%)`,
         })
       }
@@ -83,20 +98,9 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {showNotification && (
-        <div className="fixed top-4 inset-x-0 mx-auto w-fit z-50">
-          <div className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center">
-            <Leaf className="mr-2 h-5 w-5" />
-            <p>Your footprint was added! Watch the animation to see your carbon footprint.</p>
-            <button 
-              onClick={() => setShowNotification(false)}
-              className="ml-4 p-1 hover:bg-green-700 rounded-full"
-            >
-              ✕
-            </button>
-          </div>
-        </div>
-      )}
+      <Suspense fallback={null}>
+        <SearchParamsWrapper />
+      </Suspense>
       
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
