@@ -1,14 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { motion } from "framer-motion"
-import { Leaf, BarChart, Globe, Users, ArrowRight } from "lucide-react"
+import { Leaf, BarChart, Globe, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import Link from "next/link"
+import { db } from "@/lib/firebase"
+import { collection, getDocs, limitToLast, query, orderBy } from "firebase/firestore"
 
 interface Footprint {
-  id: number;
+  id: string;
   name: string;
   footprint: number;
   color: string;
@@ -16,16 +17,43 @@ interface Footprint {
 
 export default function LandingPage() {
   const [footprints, setFootprints] = useState<Footprint[]>([])
+  const [loading, setLoading] = useState(true)
 
-  // Generate random footprint data on component mount
+  // Fetch footprint data from Firebase
   useEffect(() => {
-    const generateFootprints = () => {
+    const fetchFootprints = async () => {
+      try {
+        setLoading(true)
+        const footprintsRef = collection(db, "users")
+        const footprintsQuery = query(footprintsRef, orderBy("createdAt", "desc"), limitToLast(20))
+        const snapshot = await getDocs(footprintsQuery)
+        
+        const fetchedFootprints = snapshot.docs.map(doc => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            name: data.name || "Anonymous",
+            footprint: data.footprint || Math.floor(Math.random() * 15) + 2,
+            color: data.color || `hsl(${Math.floor(Math.random() * 60) + 100}, ${Math.floor(Math.random() * 30) + 60}%, ${Math.floor(Math.random() * 20) + 40}%)`,
+          }
+        })
+        setFootprints(fetchedFootprints)
+      } catch (error) {
+        console.error("Error fetching footprints:", error)
+        // Fallback to random data if fetch fails
+        generateRandomFootprints()
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    const generateRandomFootprints = () => {
       const newFootprints = []
       const names = ["Alex", "Jamie", "Taylor", "Jordan", "Casey", "Morgan", "Riley", "Quinn", "Sam", "Avery"]
 
       for (let i = 0; i < 20; i++) {
         newFootprints.push({
-          id: i,
+          id: i.toString(),
           name: names[Math.floor(Math.random() * names.length)],
           footprint: Math.floor(Math.random() * 15) + 2, // Carbon footprint in tons (2-16)
           color: `hsl(${Math.floor(Math.random() * 60) + 100}, ${Math.floor(Math.random() * 30) + 60}%, ${Math.floor(Math.random() * 20) + 40}%)`,
@@ -35,7 +63,7 @@ export default function LandingPage() {
       setFootprints(newFootprints)
     }
 
-    generateFootprints()
+    fetchFootprints()
   }, [])
 
   return (
@@ -85,9 +113,15 @@ export default function LandingPage() {
               </div>
               <div className="relative h-[400px] w-full overflow-hidden rounded-xl border bg-gradient-to-b from-green-100 to-white dark:from-green-900 dark:to-background p-4">
                 <div className="absolute inset-0">
-                  {footprints.map((footprint) => (
-                    <FootprintBox key={footprint.id} footprint={footprint} />
-                  ))}
+                  {loading ? (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="h-10 w-10 animate-spin rounded-full border-4 border-green-600 border-t-transparent"></div>
+                    </div>
+                  ) : (
+                    footprints.map((footprint) => (
+                      <FootprintBox key={footprint.id} footprint={footprint} />
+                    ))
+                  )}
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 bg-white/80 dark:bg-black/80 backdrop-blur-sm p-4 rounded-lg">
                   <h3 className="font-medium">Real-time Carbon Footprints</h3>
@@ -190,35 +224,7 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">Ready to make a difference?</h2>
-                <p className="max-w-[700px] text-muted-foreground md:text-xl">
-                  Join thousands of people who are tracking and reducing their carbon footprint.
-                </p>
-              </div>
-              <div className="w-full max-w-sm space-y-2">
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Input type="email" placeholder="Enter your email" />
-                  <Button className="bg-green-600 hover:bg-green-700">
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  By signing up, you agree to our{" "}
-                  <Link href="#" className="underline underline-offset-2">
-                    Terms & Conditions
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        </section>  
       </main>
 
       <footer className="border-t bg-green-50 dark:bg-green-950">
@@ -309,58 +315,47 @@ export default function LandingPage() {
   )
 }
 
-// Animated footprint box component
 function FootprintBox({ footprint }: { footprint: Footprint }) {
-  // Generate random position and animation properties
-  const x = Math.random() * 100
-  const y = Math.random() * 100
-  const size = footprint.footprint * 6 // Scale the size based on footprint value
+  const { delay, duration, startOffset, verticalOffset } = useMemo(() => ({
+    delay: Math.random() * 1.5,
+    duration: 11 + Math.random() * 4,
+    startOffset: Math.random() * 30,
+    verticalOffset: Math.random() * 10 - 5,
+  }), []);
 
-  // Animation variants for the floating effect
-  const floatingAnimation = {
-    initial: { x: `${x}%`, y: `${y}%`, opacity: 0, scale: 0 },
-    animate: {
-      opacity: 0.9,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        delay: Math.random() * 0.5,
-      },
-    },
-    float: {
-      y: [`${y}%`, `${y - 5}%`, `${y}%`, `${y + 5}%`, `${y}%`],
-      x: [`${x}%`, `${x + 3}%`, `${x}%`, `${x - 3}%`, `${x}%`],
-      transition: {
-        y: {
-          duration: 5 + Math.random() * 2,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-        },
-        x: {
-          duration: 6 + Math.random() * 3,
-          repeat: Number.POSITIVE_INFINITY,
-          ease: "easeInOut",
-        },
-      },
-    },
-  }
+  const size = footprint.footprint * 6;
+  
+  const handleClick = () => {
+    window.location.href = `/profile/${footprint.id}`;
+  };
 
   return (
     <motion.div
-      className="absolute rounded-lg shadow-md flex flex-col justify-center items-center text-white text-xs font-medium overflow-hidden"
+      className="absolute rounded-lg shadow-md flex flex-col justify-center items-center text-white text-xs font-medium overflow-hidden cursor-pointer"
       style={{
-        backgroundColor: footprint.color,
+        backgroundColor: footprint.color || '#4CAF50',
         width: `${size}px`,
         height: `${size}px`,
-        transform: `translate(-50%, -50%)`,
+        top: `calc(35% + ${verticalOffset}px)`,
+        transform: 'translateY(-50%)',
       }}
-      initial="initial"
-      animate={["animate", "float"]}
-      variants={floatingAnimation}
+      initial={{ x: `${100 + startOffset}vw`, opacity: 0.95 }}
+      animate={{ x: '-20vw' }}
+      transition={{
+        delay,
+        duration,
+        ease: 'linear',
+        repeat: Infinity,
+        repeatType: 'loop',
+      }}
+      onClick={handleClick}
+      whileHover={{ 
+        scale: 1.1,
+        transition: { duration: 0.2 }
+      }}
     >
       <span className="text-center px-1">{footprint.footprint}t</span>
       <span className="text-center text-[8px] opacity-80">{footprint.name}</span>
     </motion.div>
-  )
+  );
 }
-
