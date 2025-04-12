@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { db } from "@/lib/firebase"
 import { collection, getDocs, limitToLast, query, orderBy } from "firebase/firestore"
+import { useSearchParams } from "next/navigation"
 
 interface Footprint {
   id: string;
@@ -18,6 +19,20 @@ interface Footprint {
 export default function LandingPage() {
   const [footprints, setFootprints] = useState<Footprint[]>([])
   const [loading, setLoading] = useState(true)
+  const [showNotification, setShowNotification] = useState(false)
+  const searchParams = useSearchParams()
+
+  // Check for footprintAdded parameter
+  useEffect(() => {
+    if (searchParams.get('footprintAdded') === 'true') {
+      setShowNotification(true)
+      // Auto-hide notification after 5 seconds
+      const timer = setTimeout(() => {
+        setShowNotification(false)
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [searchParams])
 
   // Fetch footprint data from Firebase
   useEffect(() => {
@@ -68,6 +83,21 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      {showNotification && (
+        <div className="fixed top-4 inset-x-0 mx-auto w-fit z-50">
+          <div className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center">
+            <Leaf className="mr-2 h-5 w-5" />
+            <p>Your footprint was added! Watch the animation to see your carbon footprint.</p>
+            <button 
+              onClick={() => setShowNotification(false)}
+              className="ml-4 p-1 hover:bg-green-700 rounded-full"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+      
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2">
@@ -317,8 +347,8 @@ export default function LandingPage() {
 
 function FootprintBox({ footprint }: { footprint: Footprint }) {
   const { delay, duration, startOffset, verticalOffset } = useMemo(() => ({
-    delay: Math.random() * 1.5,
-    duration: 11 + Math.random() * 4,
+    delay: Math.random() * 0.5,
+    duration: 15 + Math.random() * 5,
     startOffset: Math.random() * 30,
     verticalOffset: Math.random() * 10 - 5,
   }), []);

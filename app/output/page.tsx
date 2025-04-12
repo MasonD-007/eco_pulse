@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { db } from "@/lib/firebase"; // adjust the import path as needed
 import { collection, addDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 
 export default function CarbonInputPage() {
+  const router = useRouter();
   const [status, setStatus] = useState("");
   const [footprint, setFootprint] = useState("");
   const [name, setName] = useState("");
@@ -31,6 +33,11 @@ export default function CarbonInputPage() {
       // Clear the form after successful submission
       setName("");
       setFootprint("");
+      
+      // Redirect to home page after a short delay
+      setTimeout(() => {
+        router.push('/?footprintAdded=true');
+      }, 1500);
     } catch (error) {
       console.error("Error adding document: ", error);
       setStatus("Error saving document.");
