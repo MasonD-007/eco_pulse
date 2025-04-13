@@ -158,7 +158,7 @@ export default function LandingPage() {
                   )}
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 bg-white/80 dark:bg-black/80 backdrop-blur-sm p-4 rounded-lg">
-                  <h3 className="font-medium">Real-time Carbon Footprints</h3>
+                  <h3 className="font-medium">Community Carbon Footprints</h3>
                   <p className="text-sm text-muted-foreground">
                     See how your footprint compares to others around the world
                   </p>
