@@ -35,7 +35,7 @@ function SearchParamsWrapper() {
       <div className="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center">
         <Leaf className="mr-2 h-5 w-5" />
         <p>Your footprint was added! Watch the animation to see your carbon footprint.</p>
-        <button 
+        <button
           onClick={() => setShowNotification(false)}
           className="ml-4 p-1 hover:bg-green-700 rounded-full"
         >
@@ -58,7 +58,7 @@ export default function LandingPage() {
         const footprintsRef = collection(db, "users")
         const footprintsQuery = query(footprintsRef, orderBy("createdAt", "desc"), limitToLast(20))
         const snapshot = await getDocs(footprintsQuery)
-        
+
         const fetchedFootprints = snapshot.docs.map(doc => {
           const data = doc.data()
           return {
@@ -76,7 +76,7 @@ export default function LandingPage() {
         setLoading(false)
       }
     }
-    
+
     const generateRandomFootprints = () => {
       const newFootprints = []
       const names = ["Alex", "Jamie", "Taylor", "Jordan", "Casey", "Morgan", "Riley", "Quinn", "Sam", "Avery"]
@@ -101,27 +101,13 @@ export default function LandingPage() {
       <Suspense fallback={null}>
         <SearchParamsWrapper />
       </Suspense>
-      
+
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2">
             <Leaf className="h-6 w-6 text-green-600" />
             <span className="text-xl font-bold">EcoPulse</span>
           </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link href="#features" className="text-sm font-medium hover:underline underline-offset-4">
-              Features
-            </Link>
-            <Link href="#how-it-works" className="text-sm font-medium hover:underline underline-offset-4">
-              How It Works
-            </Link>
-            <Link href="#about" className="text-sm font-medium hover:underline underline-offset-4">
-              About
-            </Link>
-            <Link href="#contact" className="text-sm font-medium hover:underline underline-offset-4">
-              Contact
-            </Link>
-          </nav>
         </div>
       </header>
 
@@ -142,7 +128,6 @@ export default function LandingPage() {
                   <Link href="/calculator" passHref>
                     <Button className="bg-green-600 hover:bg-green-700">Calculate Your Footprint</Button>
                   </Link>
-                  <Button variant="outline">Learn More</Button>
                 </div>
               </div>
               <div className="relative h-[400px] w-full overflow-hidden rounded-xl border bg-gradient-to-b from-green-100 to-white dark:from-green-900 dark:to-background p-4">
@@ -258,74 +243,10 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </section>  
+        </section>
       </main>
 
       <footer className="border-t bg-green-50 dark:bg-green-950">
-        <div className="container flex flex-col gap-4 py-10 md:flex-row md:gap-8 px-4 md:px-6">
-          <div className="flex flex-col gap-2 md:gap-4 md:w-1/3">
-            <Link href="/" className="flex items-center gap-2">
-              <Leaf className="h-6 w-6 text-green-600" />
-              <span className="text-xl font-bold">CarbonCalc</span>
-            </Link>
-            <p className="text-sm text-muted-foreground">
-              Helping individuals and businesses measure, understand, and reduce their carbon footprint.
-            </p>
-          </div>
-          <div className="grid flex-1 grid-cols-2 gap-8 sm:grid-cols-3">
-            <div className="flex flex-col gap-2">
-              <h3 className="text-sm font-medium">Product</h3>
-              <nav className="flex flex-col gap-2">
-                <Link href="#" className="text-sm hover:underline">
-                  Features
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  Pricing
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  For Teams
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  For Business
-                </Link>
-              </nav>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="text-sm font-medium">Resources</h3>
-              <nav className="flex flex-col gap-2">
-                <Link href="#" className="text-sm hover:underline">
-                  Blog
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  Documentation
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  Guides
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  Support
-                </Link>
-              </nav>
-            </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="text-sm font-medium">Company</h3>
-              <nav className="flex flex-col gap-2">
-                <Link href="#" className="text-sm hover:underline">
-                  About
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  Careers
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  Contact
-                </Link>
-                <Link href="#" className="text-sm hover:underline">
-                  Privacy
-                </Link>
-              </nav>
-            </div>
-          </div>
-        </div>
         <div className="border-t py-6">
           <div className="container flex flex-col items-center justify-between gap-4 md:flex-row px-4 md:px-6">
             <p className="text-xs text-muted-foreground">
@@ -358,7 +279,7 @@ function FootprintBox({ footprint }: { footprint: Footprint }) {
   }), []);
 
   const size = footprint.footprint * 6;
-  
+
   const handleClick = () => {
     window.location.href = `/profile/${footprint.id}`;
   };
@@ -383,7 +304,7 @@ function FootprintBox({ footprint }: { footprint: Footprint }) {
         repeatType: 'loop',
       }}
       onClick={handleClick}
-      whileHover={{ 
+      whileHover={{
         scale: 1.1,
         transition: { duration: 0.2 }
       }}
